@@ -222,7 +222,7 @@ contract funding {
     address public admin;
 
     constructor() {
-        projectDetails = ProjectDetails(0x00Ec53B0d9D1725C90D0b740c7ABA9cb277a23dc);
+        projectDetails = ProjectDetails(0xAC59667E090C5f2e69E5B1F2Fe05423D825f67A2);
         // admin = _admin;
     }
 
@@ -234,6 +234,7 @@ contract funding {
 
     function contribute(uint256 _projectId) public payable {
         require(msg.value > 0, "Contribution amount must be greater than 0");
+        require(!goalReached, "Funding goal already reached");
 
         uint256 remainingAmount = getToRaised(_projectId) - getProjectAmountRaised(_projectId);
         uint256 etherAmount = msg.value;
@@ -265,10 +266,13 @@ contract funding {
         return projectDetails.getProject(_projectId).amountToRaise;
     }
 
-    function withdraw() public {
+    function withdraw(uint256 _projectId) public {
         require(goalReached, "Funding goal not reached");
         require(msg.sender == projectOwner, "Only project owner can withdraw funds");
-        payable(msg.sender).transfer(address(this).balance);
+        // add all the required require conditions
+
+        uint256 etherAmount = getProjectAmountRaised(_projectId);
+        payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount);
     }
 
     function checkGoalReached() public {

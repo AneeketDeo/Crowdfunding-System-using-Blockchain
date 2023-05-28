@@ -219,7 +219,7 @@
     }
   ];
 
-  const contractAddress = "0x309EfB557480ab6131D28b03EBeeDAD656627BE8";
+  const contractAddress = "0x1f51D05b56E1FdC7C0D97f76DF07B566e3AA72Ea";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
     function fund(){
@@ -252,9 +252,9 @@
               console.error(error);
             });
             
-            }).catch(function(error) {
-                console.error(error);
-            });
+          }).catch(function(error) {
+              console.error(error);
+          });
       }
       
     }

@@ -394,7 +394,7 @@
     }
   ];
   
-  const contractAddress = "0x00Ec53B0d9D1725C90D0b740c7ABA9cb277a23dc";
+  const contractAddress = "0xAC59667E090C5f2e69E5B1F2Fe05423D825f67A2";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
 
@@ -455,6 +455,10 @@
                         <div class="card-button">
                           ${result[i].approved == "true" || result[i].approved == "false"? '' : `<button type="button" id="${i}" class="btn btn-success">Approve Project</button>`}
                           ${result[i].approved == "false" ? '' : `<button type="button" id="${i+100}" class="btn btn-danger" id="btndanger">Reject Project</button>`}
+                        </div>
+
+                        <div class="card-button">
+                          ${result[i].amountToRaise == result[i].amountRaised ? `<button type="button" id="${i}" class="btn btn-primary">Approve Campaign</button>` : `${result[i].amountRaised}`}
                         </div>
                       </div>
                     </div>
@@ -552,6 +556,22 @@
       });
   }
   
+  async function transfer() {
+      id = 0;
+      // Fetch card data from the blockchain using web3.js
+      web3.eth.getAccounts().then(function(accounts) {
+
+        contractInstance.methods.withdraw(id).send({from: accounts[0]}).then((result) => {;
+
+          console.log(result);
+
+        }).catch((error) => {
+        console.error(error);
+        });
+      }).catch(function(error) {
+          console.error(error);
+      });
+    }
 </script>
 </head>
 <body onload="get_projects()" style="background-image: url(./img/a/background.jpg);">
