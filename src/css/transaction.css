@@ -415,3 +415,74 @@ html {
     margin-right: 10px;
     font-size: 20px;
   }
+
+
+
+
+  .container {
+    height: 270px;
+    max-width: 1200px;
+    margin-top: 70px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgb(181, 188, 188);
+  }
+  
+  #hashvalue2 , #from2 ,#to2 ,#value2 {
+      height: 1px;
+      
+  }
+  .row {
+    margin-bottom: 1px; 
+  }
+  #row1 {
+      height: 100px;
+  }
+  .col-12 {
+    background-color: #f5f5f5;
+    padding: 5px; 
+  }
+  .col-4 {
+    background-color: #d5d5d5;
+    padding: 20px;
+  }
+  .col-5 {
+    background-color: #e5e5e5;
+    padding: 20px;
+  }
+  .col-2 {
+    background-color: #c5c5c5;  
+  }
+  
+  @media (max-width: 767px) {
+    .col-12 {
+      padding: 10px;
+    }
+  
+    .col-4, .col-5, .col-2 {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    .col-12 {
+      padding: 15px;
+    }
+  
+    .col-4, .col-5, .col-2 {
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .col-12 {
+      padding: 20px;
+    }
+  
+    .col-4, .col-5, .col-2 {
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+  }
