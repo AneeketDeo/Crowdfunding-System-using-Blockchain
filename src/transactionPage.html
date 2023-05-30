@@ -80,8 +80,203 @@
 }
 
     </style>
+
+<script>
+    // Fetch transactions from Ganache
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+        // alert(web3);
+    } else {
+        // set the provider you want from Web3.providers
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+        // alert(web3);
+    }
+
+    // --------------------------------------------FIRST ATTEMPT-------------------------------------------------//
+//     web3.eth.getPastLogs({
+//         fromBlock: 0,
+//         toBlock: 'latest',
+//         topics: []
+//     }, function(error, logs) {
+//     if (!error) {
+//     // Process the fetched transactions
+//     const transactions = logs.map(log => ({
+//       hash: log.transactionHash,
+//       sender: log.topics[1],
+//       receiver: log.topics[2],
+//       timestamp: log.timestamp
+//     }));
+
+//     console.log(transactions);
+
+//     // Get the transaction list element
+//     const transactionList = document.getElementById('transaction-list');
+
+//     // Generate HTML content for displaying transactions
+//     transactions.forEach(transaction => {
+//       const listItem = document.createElement('li');
+//       listItem.textContent = `Hash: ${transaction.hash}, Sender: ${transaction.sender}, Receiver: ${transaction.receiver}, Timestamp: ${transaction.timestamp}`;
+//       transactionList.appendChild(listItem);
+//     });
+//   } else {
+//     console.error(error);
+//   }
+// });
+
+
+// --------------------------->SECOND ATTEMPT<--------------------------//
+
+
+async function startupTransactions() {
+  const latestBlockNumber = await web3.eth.getBlockNumber();
+  const transactionsContainer = document.getElementById('transactions');
+
+//   SPECIFIC ADDRESS
+const fromAddress = '0xA477931c14B1FDaD19AB69080BA50b5Cd4a6C631';
+
+  for (let blockNumber = 1; blockNumber <= latestBlockNumber; blockNumber++) {
+    const block = await web3.eth.getBlock(blockNumber, true); // Set second parameter to 'true' to retrieve transaction details
+
+    // SPECIIC ADDRESS
+    const transactions = block.transactions;
+    const filteredTransactions = transactions.filter(transaction => transaction.from === fromAddress);
+
+    const blockNumbers = transactions
+    .filter(transaction => transaction.from === fromAddress) // Filter logs by the specified from address
+    .map(transaction => transaction.blockNumber);
+
+    // html
+    const blockDiv = document.createElement('div');
+
+    // SKIP if not specific address
+    if(blockNumber != blockNumbers){
+      continue;
+    }
+    blockDiv.innerHTML = `<h3>Block Number: ${block.number}</h3>`;
+
+    // Sort the filtered transactions by index in ascending order
+    filteredTransactions.sort((a, b) => a.transactionIndex - b.transactionIndex);
+
+    // Process or display the sorted transactions as needed
+    for (const tx of filteredTransactions) {
+      const txTimestamp = new Date(block.timestamp * 1000).toLocaleString(); // Convert Unix timestamp to a readable date/time format
+
+        const txDiv = document.createElement('div');
+        txDiv.innerHTML = `
+          <p>Transaction Hash: ${tx.hash}</p>
+          <p>Timestamp: ${txTimestamp}</p>
+          <p>From: Startup1</p>
+          <p>To: ${tx.to}</p>
+          <p>Value: ${web3.utils.fromWei(tx.value, 'ether')} Ether</p>
+          <hr>
+        `;
+
+        blockDiv.appendChild(txDiv);
+    }
+
+
+    // ALL TRANSACTIONS
+    // if (block && block.transactions.length > 0) {
+    //     const blockDiv = document.createElement('div');
+    //     blockDiv.innerHTML = `<h3>Block Number: ${block.number}</h3>`;
+      
+    //   for (const tx of block.transactions) {
+    //     const txDiv = document.createElement('div');
+    //     txDiv.innerHTML = `
+    //       <p>Transaction Hash: ${tx.hash}</p>
+    //       <p>From: ${tx.from}</p>
+    //       <p>To: ${tx.to}</p>
+    //       <p>Value: ${web3.utils.fromWei(tx.value, 'ether')} Ether</p>
+    //       <hr>
+    //     `;
+
+    //     blockDiv.appendChild(txDiv);
+    //   }
+
+      
+    //     transactionsContainer.appendChild(blockDiv);    
+    // }
+    transactionsContainer.appendChild(blockDiv);   
+  }
+}
+
+
+async function backerTransactions() {
+  const latestBlockNumber = await web3.eth.getBlockNumber();
+  const transactionsContainer = document.getElementById('backer-transactions');
+
+//   SPECIFIC ADDRESS
+const fromAddress = '0x71FB9a14e35e88eEd482316A9FC0712eFCc20815';
+
+  for (let blockNumber = 1; blockNumber <= latestBlockNumber; blockNumber++) {
+    const block = await web3.eth.getBlock(blockNumber, true); // Set second parameter to 'true' to retrieve transaction details
+
+    // SPECIIC ADDRESS
+    const transactions = block.transactions;
+    const filteredTransactions = transactions.filter(transaction => transaction.from === fromAddress);
+
+    const blockNumbers = transactions
+    .filter(transaction => transaction.from === fromAddress) // Filter logs by the specified from address
+    .map(transaction => transaction.blockNumber);
+
+    // html
+    const blockDiv = document.createElement('div');
+
+    // SKIP if not specific address
+    if(blockNumber != blockNumbers){
+      continue;
+    }
+    blockDiv.innerHTML = `<h3>Block Number: ${block.number}</h3>`;
+
+    // Sort the filtered transactions by index in ascending order
+    filteredTransactions.sort((a, b) => a.transactionIndex - b.transactionIndex);
+
+    // Process or display the sorted transactions as needed
+    for (const tx of filteredTransactions) {
+      const txTimestamp = new Date(block.timestamp * 1000).toLocaleString(); // Convert Unix timestamp to a readable date/time format
+
+        const txDiv = document.createElement('div');
+        txDiv.innerHTML = `
+          <p>Transaction Hash: ${tx.hash}</p>
+          <p>Timestamp: ${txTimestamp}</p>
+          <p>From: Backer1</p>
+          <p>To: ${tx.to}</p>
+          <p>Value: ${web3.utils.fromWei(tx.value, 'ether')} Ether</p>
+          <hr>
+        `;
+
+        blockDiv.appendChild(txDiv);
+    }
+
+
+    // ALL TRANSACTIONS
+    // if (block && block.transactions.length > 0) {
+    //     const blockDiv = document.createElement('div');
+    //     blockDiv.innerHTML = `<h3>Block Number: ${block.number}</h3>`;
+      
+    //   for (const tx of block.transactions) {
+    //     const txDiv = document.createElement('div');
+    //     txDiv.innerHTML = `
+    //       <p>Transaction Hash: ${tx.hash}</p>
+    //       <p>From: ${tx.from}</p>
+    //       <p>To: ${tx.to}</p>
+    //       <p>Value: ${web3.utils.fromWei(tx.value, 'ether')} Ether</p>
+    //       <hr>
+    //     `;
+
+    //     blockDiv.appendChild(txDiv);
+    //   }
+
+      
+    //     transactionsContainer.appendChild(blockDiv);    
+    // }
+    transactionsContainer.appendChild(blockDiv);   
+  }
+}
+
+</script>
 </head>
-<body>
+<body onload="startupTransactions(); backerTransactions()">
 
     <header>
         <div class="header-area ">
@@ -168,5 +363,11 @@
             </div>
           </div>
     </div>
+
+    <h1>Startup Transactions</h1>
+    <div id="transactions"></div>
+
+    <h1>Backer Transactions</h1>
+    <div id="backer-transactions"></div>
 </body>
 </html>

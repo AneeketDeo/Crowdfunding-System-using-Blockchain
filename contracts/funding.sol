@@ -219,35 +219,47 @@ contract funding {
     mapping(address => uint) public contributors;
     bool public goalReached;
 
-    address public admin;
+    address payable public admin;
 
-    constructor() {
-        projectDetails = ProjectDetails(0xAC59667E090C5f2e69E5B1F2Fe05423D825f67A2);
-        // admin = _admin;
+    constructor(address payable _admin) {
+        projectDetails = ProjectDetails(0x73e55eE03C09905D5C4B5285783Db517B9E38155);
+        admin = _admin;
     }
 
-    // function weiToEther(uint256 weiAmount) public pure returns (uint256) {
-    //     return weiAmount / 1 ether;
-    // }
+    function weiToEther(uint256 weiAmount) public pure returns (uint256) {
+        return weiAmount / 1 ether;
+    }
 
 
 
     function contribute(uint256 _projectId) public payable {
         require(msg.value > 0, "Contribution amount must be greater than 0");
-        require(!goalReached, "Funding goal already reached");
+        require(!isGoalReached(_projectId), "Funding goal already reached");
 
         uint256 remainingAmount = getToRaised(_projectId) - getProjectAmountRaised(_projectId);
-        uint256 etherAmount = msg.value;
+        uint256 etherAmount = weiToEther(msg.value);
 
-        // CHANGES                                
-        if (etherAmount >= remainingAmount) {
-            // Adjust the contribution amount to the remaining amount required to reach the funding goal
-            payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount - remainingAmount);
-            projectDetails.addAmountRaised(_projectId, remainingAmount);
-        } else {
-            projectDetails.addAmountRaised(_projectId, etherAmount);
-            payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount);
+        // CHANGES        
+        if (etherAmount > remainingAmount) {
+            etherAmount = remainingAmount;
+        }                        
+        // if (etherAmount >= remainingAmount) {
+        //     // Adjust the contribution amount to the remaining amount required to reach the funding goal
+        //     payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount - remainingAmount);
+        //     projectDetails.addAmountRaised(_projectId, remainingAmount);
+        // } else {
+        //     projectDetails.addAmountRaised(_projectId, etherAmount);
+        //     payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount);
+        // }
+
+        projectDetails.addAmountRaised(_projectId, etherAmount);
+        fundingGoal = getToRaised(_projectId);
+        totalAmountRaised = getProjectAmountRaised(_projectId);
+        if(totalAmountRaised >= fundingGoal){
+            projectDetails.getProject(_projectId).goalReached = true;
         }
+
+        admin.send(etherAmount);
         
         
     }
@@ -266,20 +278,24 @@ contract funding {
         return projectDetails.getProject(_projectId).amountToRaise;
     }
 
-    function withdraw(uint256 _projectId) public {
-        require(goalReached, "Funding goal not reached");
-        require(msg.sender == projectOwner, "Only project owner can withdraw funds");
+    function isGoalReached(uint256 _projectId) public view returns (bool) {
+        return projectDetails.getProject(_projectId).goalReached;
+    }
+
+    function withdraw(uint256 _projectId) public payable{
+        require(isGoalReached(_projectId), "Funding goal not reached");
+        require(msg.sender == admin, "Only admin can withdraw funds");
         // add all the required require conditions
 
         uint256 etherAmount = getProjectAmountRaised(_projectId);
-        payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount);
+        payable(projectDetails.getProjectOwner(_projectId)).send(etherAmount);
     }
 
-    function checkGoalReached() public {
-        if (totalAmountRaised >= fundingGoal) {
-            goalReached = true;
-        }
-    }
+    // function checkGoalReached() public {
+    //     if (totalAmountRaised >= fundingGoal) {
+    //         goalReached = true;
+    //     }
+    // }
 
     function refund() public {
         require(contributors[msg.sender] > 0, "No contribution found for this address");

@@ -264,6 +264,11 @@
               "internalType": "string",
               "name": "approved",
               "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "goalReached",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project",
@@ -320,6 +325,11 @@
               "internalType": "string",
               "name": "approved",
               "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "goalReached",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -376,6 +386,11 @@
               "internalType": "string",
               "name": "approved",
               "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "goalReached",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -389,7 +404,7 @@
     }
   ];
   
-  const contractAddress = "0xAC59667E090C5f2e69E5B1F2Fe05423D825f67A2";
+  const contractAddress = "0x73e55eE03C09905D5C4B5285783Db517B9E38155";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
   async function get_projects() {
@@ -456,9 +471,10 @@
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.${result[i].description}</p>
                           </div>
                           <ul class="list-group list-group-flush">
-                            <p class="date">${result[i].startDate}</p>
-                            <p class="date">${result[i].endDate}</p>
-                            <p class="amount">${result[i].amountToRaise}</p>
+                            <p class="date">Start Date: ${result[i].startDate}</p>
+                            <p class="date">End Date: ${result[i].endDate}</p>
+                            <p class="amount">Funding Goal: ${result[i].amountToRaise}</p>
+                            <p class="amount">Amount Raised: ${result[i].amountRaised}</p>
                           </ul>
                           <ul class="list-group list-group-flush">
                           <p class="date" id="m1">${result[i].milestones[0] ? result[i].milestones[0] : "Milestones not set"}</p>

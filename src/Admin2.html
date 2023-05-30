@@ -269,6 +269,11 @@
               "internalType": "string",
               "name": "approved",
               "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "goalReached",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project",
@@ -325,6 +330,11 @@
               "internalType": "string",
               "name": "approved",
               "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "goalReached",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -381,6 +391,11 @@
               "internalType": "string",
               "name": "approved",
               "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "goalReached",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -394,8 +409,253 @@
     }
   ];
   
-  const contractAddress = "0xAC59667E090C5f2e69E5B1F2Fe05423D825f67A2";
+  const contractAddress = "0x73e55eE03C09905D5C4B5285783Db517B9E38155";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+
+
+
+  // funding contract
+  const fundingAbi =[
+  {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address payable",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "contributors",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "fundingGoal",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "goalReached",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "projectOwner",
+      "outputs": [
+        {
+          "internalType": "address payable",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "totalAmountRaised",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "weiAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "weiToEther",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "contribute",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function",
+      "payable": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProjectName",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProjectAmountRaised",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getToRaised",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isGoalReached",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function",
+      "payable": true
+    },
+    {
+      "inputs": [],
+      "name": "refund",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ];
+  
+  const fundingAddress = "0x9806897F1D859E264fa6D336346FF8aDA575DD78";
+  const fundingInstance = new web3.eth.Contract(fundingAbi, fundingAddress);
 
 
   async function get_projects() {
@@ -442,9 +702,10 @@
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.${result[i].description}</p>
                         </div>
                         <ul class="list-group list-group-flush">
-                          <p class="date">${result[i].startDate}</p>
-                          <p class="date">${result[i].endDate}</p>
-                          <p class="amount">${result[i].amountToRaise}</p>
+                          <p class="date">Start Date: ${result[i].startDate}</p>
+                          <p class="date">End Date: ${result[i].endDate}</p>
+                          <p class="amount">Funding Goal: ${result[i].amountToRaise}</p>
+                          <p class="amount">Amount Raised: ${result[i].amountRaised}</p>
                         </ul>
                         <ul class="list-group list-group-flush">
                         <p class="date" id="m1">${result[i].milestones[0] ? result[i].milestones[0] : "Milestones not set"}</p>
@@ -458,7 +719,7 @@
                         </div>
 
                         <div class="card-button">
-                          ${result[i].amountToRaise == result[i].amountRaised ? `<button type="button" id="${i}" class="btn btn-primary">Approve Campaign</button>` : `${result[i].amountRaised}`}
+                          ${result[i].amountToRaise == result[i].amountRaised ? `<button type="button" id="${i+200}" class="btn btn-primary">Approve Campaign</button>` : `${result[i].amountRaised}`}
                         </div>
                       </div>
                     </div>
@@ -515,7 +776,7 @@
               button2.addEventListener('click', function() {
               let projectID = this.id - 100;
               localStorage.setItem('projectID', projectID);
-              alert(projectID);
+              // alert(projectID);
 
               web3.eth.getAccounts().then(function(accounts) {
               // Do something with the account
@@ -524,6 +785,40 @@
 
                   if(result){
                     window.location = "Admin2.html";
+                  }
+                  else{
+                    console.log("something went wrong");
+                  }
+  
+
+              }).catch((error) => {
+                  console.error(error);
+              });
+
+
+              }).catch(function(error) {
+                  console.error(error);
+              });
+            });
+            }
+
+
+            // approve campaign
+            let approveCampaign = document.getElementById(i+200);
+            if(approveCampaign != null){
+              approveCampaign.addEventListener('click', function() {
+              let projectID = this.id - 200;
+              localStorage.setItem('projectID', projectID);
+              // alert(projectID);
+
+              web3.eth.getAccounts().then(function(accounts) {
+              // Do something with the account
+              fundingInstance.methods.withdraw(projectID).send({from: accounts[0]}).then((result) => {
+                  console.log(result);
+
+                  if(result){
+                    // window.location = "Admin2.html";
+                    console.log("transfer succesful");
                   }
                   else{
                     console.log("something went wrong");
@@ -556,22 +851,10 @@
       });
   }
   
-  async function transfer() {
-      id = 0;
-      // Fetch card data from the blockchain using web3.js
-      web3.eth.getAccounts().then(function(accounts) {
 
-        contractInstance.methods.withdraw(id).send({from: accounts[0]}).then((result) => {;
 
-          console.log(result);
+  
 
-        }).catch((error) => {
-        console.error(error);
-        });
-      }).catch(function(error) {
-          console.error(error);
-      });
-    }
 </script>
 </head>
 <body onload="get_projects()" style="background-image: url(./img/a/background.jpg);">
