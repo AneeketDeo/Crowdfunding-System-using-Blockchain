@@ -1,27 +1,36 @@
 //SPDX-License-Identifier: UNLICENSED
-//one change for new branch
 pragma solidity >=0.6.0 < 0.9.0;
 
-// ----------------------------------CONTRACT #5-----------------------------//
+import "./ProjectDetails.sol";
 
-contract AdminLogin {
+contract BackerRewards {
+    ProjectDetails public projectDetails;
 
-    address public admin;
+    mapping(uint256 => mapping(address => RewardChoice)) public rewardChoices;
 
-    constructor() {
-        admin = msg.sender; // Set the contract deployer as the admin
+    struct RewardChoice {
+        bool choseRewards;
+        bool choseShares;
     }
 
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "Only admin can perform this action");
-        _;
+    constructor(address _projectDetailsAddress) {
+        projectDetails = ProjectDetails(_projectDetailsAddress);
     }
 
-    function loginAsAdmin() public view returns (bool) {
-        return msg.sender == admin;
+    function chooseRewards(uint256 _projectId) public {
+        // require(projectDetails.getProjectOwner(_projectId) != address(0), "Invalid project ID");
+        rewardChoices[_projectId][msg.sender].choseRewards = true;
+        rewardChoices[_projectId][msg.sender].choseShares = false;
     }
 
+    function chooseShares(uint256 _projectId) public {
+        // require(projectDetails.getProjectOwner(_projectId) != address(0), "Invalid project ID");
+        rewardChoices[_projectId][msg.sender].choseRewards = false;
+        rewardChoices[_projectId][msg.sender].choseShares = true;
+    }
 
+    function getRewardChoice(uint256 _projectId, address _backer) public view returns (bool choseRewards, bool choseShares) {
+        RewardChoice memory choice = rewardChoices[_projectId][_backer];
+        return (choice.choseRewards, choice.choseShares);
+    }
 }
-
-

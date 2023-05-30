@@ -513,11 +513,153 @@
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
 
+
+  // contract details for interacting with smart contract
+  const rewardsAbi =[
+  {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_projectDetailsAddress",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "projectDetails",
+      "outputs": [
+        {
+          "internalType": "contract ProjectDetails",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "rewardChoices",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "choseRewards",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "choseShares",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "chooseRewards",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "chooseShares",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_backer",
+          "type": "address"
+        }
+      ],
+      "name": "getRewardChoice",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "choseRewards",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "choseShares",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ];
+  
+  const rewardsAddress = "0x82d3D8dDd2607DCD2E0CdA54C08a844fd3Ac8f18";
+  const rewardsInstance = new web3.eth.Contract(rewardsAbi, rewardsAddress);
+
+
   async function get_projects() {
       id = 0;
+      rewardsChoice = "not set";
+      sharesChoice = "not set";
+      returnChoosed = false;
 
       // Fetch card data from the blockchain using web3.js
       web3.eth.getAccounts().then(function(accounts) {
+        rewardsInstance.methods.getRewardChoice(id, accounts[0]).call().then((result) => {;
+          console.log("type choosed: ", result);
+          if(result.length != 0){
+            rewardsChoice = result.choseRewards.toString();
+            sharesChoice = result.choseShares.toString();
+          }
+
+          // set flag if reward type choosed
+          if(rewardsChoice == "true" || sharesChoice == "true"){
+            returnChoosed = true;
+          }
+          
+          // if(result){
+          //     window.location = "fund.html";
+          // }
+
+        }).catch((error) => {
+        console.error(error);
+        });
         const cardData = contractInstance.methods.getAllProjects().call({from: accounts[0]}).then((result) => {;
         console.log(result);
 
@@ -570,6 +712,7 @@
                             <p class="date">End Date: ${result[i].endDate}</p>
                             <p class="amount">Funding Goal: ${result[i].amountToRaise}</p>
                             <p class="amount">Amount Raised: ${result[i].amountRaised}</p>
+                            <p class="amount">Returns Type: ${rewardsChoice ? "Rewards" : "Shares"}</p>
                           </ul>
                           <ul class="list-group list-group-flush">
                           <p class="date" id="m1">${result[i].milestones[0] ? result[i].milestones[0] : "Milestones not set"}</p>
@@ -579,8 +722,8 @@
                           
                           <div class="card-button">
                             <button type="button" class="btn btn-success">Know more</button>
-                            <button type="button" id="${i}" class="btn btn-secondary" hidden><a href="fund.html">Fund Project</a></button>
-                            ${result[i].amountToRaise == result[i].amountRaised ? '' : `<button type="button" id="${i}" class="btn btn-secondary"><a href="fund.html">Fund Project</a></button>`}
+                            <button type="button" id="${i}" class="btn btn-secondary" hidden><a ${returnChoosed ? `href="fund.html"` : `href="rewards.html"`} >Fund Project</a></button>
+                            ${result[i].amountToRaise == result[i].amountRaised ? '' : `<button type="button" id="${i}" class="btn btn-secondary"><a ${returnChoosed ? `href="fund.html"` : `href="rewards.html"`}>Fund Project</a></button>`}
                                                         
                           </div>
                         </div>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>donate now</title>
+    <title>Choose Rewards</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">  
   <link rel="stylesheet" href="css/style.css">
@@ -13,6 +13,28 @@
   <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
 
  
+  <style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 10px;
+        text-align: center;
+        width: 200px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+</style>
 
   <script>
     if (typeof web3 !== 'undefined') {
@@ -30,8 +52,8 @@
     {
       "inputs": [
         {
-          "internalType": "address payable",
-          "name": "_admin",
+          "internalType": "address",
+          "name": "_projectDetailsAddress",
           "type": "address"
         }
       ],
@@ -40,10 +62,10 @@
     },
     {
       "inputs": [],
-      "name": "admin",
+      "name": "projectDetails",
       "outputs": [
         {
-          "internalType": "address payable",
+          "internalType": "contract ProjectDetails",
           "name": "",
           "type": "address"
         }
@@ -54,187 +76,27 @@
     },
     {
       "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
         {
           "internalType": "address",
           "name": "",
           "type": "address"
         }
       ],
-      "name": "contributors",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "fundingGoal",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "goalReached",
+      "name": "rewardChoices",
       "outputs": [
         {
           "internalType": "bool",
-          "name": "",
+          "name": "choseRewards",
           "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "projectOwner",
-      "outputs": [
-        {
-          "internalType": "address payable",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "totalAmountRaised",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "weiAmount",
-          "type": "uint256"
-        }
-      ],
-      "name": "weiToEther",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "pure",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_projectId",
-          "type": "uint256"
-        }
-      ],
-      "name": "contribute",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function",
-      "payable": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_projectId",
-          "type": "uint256"
-        }
-      ],
-      "name": "getProjectName",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_projectId",
-          "type": "uint256"
-        }
-      ],
-      "name": "getProjectAmountRaised",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_projectId",
-          "type": "uint256"
-        }
-      ],
-      "name": "getToRaised",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_projectId",
-          "type": "uint256"
-        }
-      ],
-      "name": "isGoalReached",
-      "outputs": [
+        },
         {
           "internalType": "bool",
-          "name": "",
+          "name": "choseShares",
           "type": "bool"
         }
       ],
@@ -250,96 +112,127 @@
           "type": "uint256"
         }
       ],
-      "name": "withdraw",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function",
-      "payable": true
-    },
-    {
-      "inputs": [],
-      "name": "refund",
+      "name": "chooseRewards",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "chooseShares",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_backer",
+          "type": "address"
+        }
+      ],
+      "name": "getRewardChoice",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "choseRewards",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "choseShares",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
     }
   ];
 
-  const contractAddress = "0x9806897F1D859E264fa6D336346FF8aDA575DD78";
+  const contractAddress = "0x82d3D8dDd2607DCD2E0CdA54C08a844fd3Ac8f18";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
-    function fund(){
-      id = 0;
-      amount = document.getElementById("amount").value;
+  // project id
+  id = localStorage.getItem('projectID');
 
-      if(amount == "" || isNaN(amount)){
-        alert("Please enter a valid amount");
-      }
-      else{
-        id = localStorage.getItem('projectID');
-        console.log(id);
-
-        // remianing amount logic
-        amountRaised = 0;
-        amountToRaise = 0;
+    function chooseRewards(){
 
         web3.eth.getAccounts().then(function(accounts) {
-            console.log("amount", amount);
             // get current account's project id
 
-            contractInstance.methods.getProjectAmountRaised(id).call().then((result) => {;
+            contractInstance.methods.chooseRewards(id).send({from:accounts[0]}).then((result) => {;
 
-              console.log("amount raised", result);
-              amountRaised = result;
-
-            }).catch((error) => {
-            console.error(error);
-            });
-
-            contractInstance.methods.getToRaised(id).call().then((result) => {;
-
-              console.log("amount to raise", result);
-              amountToRaise = result;
-
-              remainingAmount = amountToRaise - amountRaised;
-              console.log("rem = ", remainingAmount);
-
-              if(amount > remainingAmount){
-                amount = remainingAmount.toString();
-              }
-              if(remainingAmount == 0){
-                alert("funding goal already reached");
-                return;
-              }
-              console.log("amount inside toraise", amount);
-
-              // contribute method
-              contractInstance.methods.contribute(id).send({from: accounts[0], value: web3.utils.toWei(amount, 'ether')}).then((result) => {;
-
-                console.log(result);
-
-              }).catch((error) => {
-                console.error(error);
-              });
+              console.log("rewards choosed", result);
+              // if(result){
+              //   window.location = "fund.html";
+              // }
 
             }).catch((error) => {
             console.error(error);
             });
-
-            
-
-            
           }).catch(function(error) {
               console.error(error);
           });
-      }
-      
     }
+
+    function chooseShares(){
+
+      web3.eth.getAccounts().then(function(accounts) {
+          // get current account's project id
+
+          contractInstance.methods.chooseShares(id).send({from : accounts[0]}).then((result) => {;
+
+            console.log("shares choosed", result);
+            // if(result){
+            //     window.location = "fund.html";
+            // }
+
+          }).catch((error) => {
+          console.error(error);
+          });
+        }).catch(function(error) {
+            console.error(error);
+        });
+    }
+
+    function choice(){
+
+      web3.eth.getAccounts().then(function(accounts) {
+          // get current account's project id
+
+          contractInstance.methods.getRewardChoice(id, accounts[0]).call().then((result) => {;
+
+            console.log("type choosed: ", result);
+            // if(result){
+            //     window.location = "fund.html";
+            // }
+
+          }).catch((error) => {
+          console.error(error);
+          });
+        }).catch(function(error) {
+            console.error(error);
+        });
+    }
+      
     
   </script>
 
 </head>
-<body >
+<body onload="choice()">
 
 <header>
   <div class="header-area ">
@@ -412,46 +305,14 @@
 </header>
 
     <div class="container">
-        <div class="d-flex justify-content-center h-100">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Fund a project</h3>
-                    <!-- <div class="d-flex justify-content-end social_icon">
-                        <span><i class="fa fa-facebook-square"></i></span>
-                        <span><i class="fa fa-google-plus-square"></i></span>
-                        <span><i class="fa fa-twitter-square"></i></span>
-                    </div> -->
-                </div>
-                <div class="card-body">
-                    <form>
-
-
-                        <div class=" input-group form-group">
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text">$</span>
-                              </div>
-                              <input type="text" class="form-control" id="amount" placeholder="Enter amount to be donate">
-                          </div>
-                      </div>
-
-                        <div class="form-group">
-                            <input type="button" value="Donate" id="donate_btn" onClick="fund()" class="btn float-left login_btn">
-                        </div>
-                        <!-- Validation -->
-                        <div class="input-group form-group">
-                            <h5 id="invalid_msg"></h5>   
-                        </div>
-                    </form>
-                </div>
-                <!-- <div class="card-footer">
-                    <div class="d-flex justify-content-center links">
-                        Don't have an account?<a href="ProjectRegisteration.html">Sign Up</a>
-                    </div>
-
-                </div> -->
-            </div>
-        </div>
+      <div class="card">
+          <h3>Choose Rewards</h3>
+          <button onclick="chooseRewards()">Choose</button>
+      </div>
+      <div class="card">
+          <h3>Choose Shares</h3>
+          <button onclick="chooseShares()">Choose</button>
+      </div>
     </div>
     
     <footer class="text-center text-lg-start bg-white text-muted">
