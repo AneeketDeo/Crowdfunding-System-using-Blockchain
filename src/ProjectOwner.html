@@ -389,7 +389,7 @@
     }
   ];
   
-  const contractAddress = "0xAC59667E090C5f2e69E5B1F2Fe05423D825f67A2";
+  const contractAddress = "0xE96Ce5E3392625dbE7bb37118637571bEBfdD0C6";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
   async function get_projects() {
@@ -453,7 +453,7 @@
                           <div class="card-body">
                             <h3 style="text-align: center; padding-top: 10px; ;">Project ${i+1} </h3>
                             <h5 class="card-title">${result[i].title}</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.${result[i].description}</p>
+                            <p class="card-text">${result[i].description}</p>
                           </div>
                           <ul class="list-group list-group-flush">
                             <p class="date">${result[i].startDate}</p>

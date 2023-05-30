@@ -197,7 +197,13 @@
       "constant": true
     },
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
       "name": "withdraw",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -219,7 +225,7 @@
     }
   ];
 
-  const contractAddress = "0x1f51D05b56E1FdC7C0D97f76DF07B566e3AA72Ea";
+  const contractAddress = "0x562CcC15F9B139a1c0ee077116D0898C797e4175";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
     function fund(){

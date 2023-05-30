@@ -46,41 +46,43 @@
         // contract details for interacting with smart contract
           const contractAbi =[
           {
-            "inputs": [],
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-            },
-            {
-            "inputs": [],
-            "name": "admin",
-            "outputs": [
-                {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function",
-            "constant": true
-            },
-            {
-            "inputs": [],
-            "name": "loginAsAdmin",
-            "outputs": [
-                {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function",
-            "constant": true
-            }
-        ];
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "loginAsAdmin",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ];
+
         
-        const contractAddress = "0x379b1Ab73963f9A28F77a06D6012D81D313209d4";
+        
+        const contractAddress = "0x20c71cfEd687AFC5e207B131A5C9d00fa4EC738E";
         const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
   
         function isAdmin(){
