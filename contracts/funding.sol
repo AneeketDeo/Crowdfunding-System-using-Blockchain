@@ -221,8 +221,8 @@ contract funding {
 
     address payable public admin;
 
-    constructor(address payable _admin) {
-        projectDetails = ProjectDetails(0x73e55eE03C09905D5C4B5285783Db517B9E38155);
+    constructor(address payable _admin, address _projectDetailsAddress) {
+        projectDetails = ProjectDetails(_projectDetailsAddress);
         admin = _admin;
     }
 
@@ -259,7 +259,7 @@ contract funding {
             projectDetails.getProject(_projectId).goalReached = true;
         }
 
-        admin.send(etherAmount);
+        admin.transfer(etherAmount);
         
         
     }
@@ -283,12 +283,12 @@ contract funding {
     }
 
     function withdraw(uint256 _projectId) public payable{
-        require(isGoalReached(_projectId), "Funding goal not reached");
+        // require(isGoalReached(_projectId), "Funding goal not reached");
         require(msg.sender == admin, "Only admin can withdraw funds");
         // add all the required require conditions
 
         uint256 etherAmount = getProjectAmountRaised(_projectId);
-        payable(projectDetails.getProjectOwner(_projectId)).send(etherAmount);
+        payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount);
     }
 
     // function checkGoalReached() public {

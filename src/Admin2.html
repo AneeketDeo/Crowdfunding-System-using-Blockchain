@@ -409,7 +409,7 @@
     }
   ];
   
-  const contractAddress = "0x73e55eE03C09905D5C4B5285783Db517B9E38155";
+  const contractAddress = "0x9F45Eeb7c50082cb29376D8994f1C46360483E28";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
 
@@ -421,6 +421,11 @@
         {
           "internalType": "address payable",
           "name": "_admin",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_projectDetailsAddress",
           "type": "address"
         }
       ],
@@ -654,7 +659,7 @@
     }
   ];
   
-  const fundingAddress = "0x9806897F1D859E264fa6D336346FF8aDA575DD78";
+  const fundingAddress = "0x9da2EBCC1A42A7046820623D99C3Be082f9E294e";
   const fundingInstance = new web3.eth.Contract(fundingAbi, fundingAddress);
 
 

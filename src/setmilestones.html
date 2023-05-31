@@ -350,6 +350,11 @@ input{
               "internalType": "string",
               "name": "approved",
               "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "goalReached",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project",
@@ -406,6 +411,11 @@ input{
               "internalType": "string",
               "name": "approved",
               "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "goalReached",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -462,6 +472,11 @@ input{
               "internalType": "string",
               "name": "approved",
               "type": "string"
+            },
+            {
+              "internalType": "bool",
+              "name": "goalReached",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -475,7 +490,7 @@ input{
     }
   ];
     
-    const contractAddress = "0x00Ec53B0d9D1725C90D0b740c7ABA9cb277a23dc";
+    const contractAddress = "0x9F45Eeb7c50082cb29376D8994f1C46360483E28";
     const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
   
     async function setmilestones() {
