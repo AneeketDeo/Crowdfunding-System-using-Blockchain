@@ -131,7 +131,7 @@
       "name": "getProjectOwner",
       "outputs": [
         {
-          "internalType": "address",
+          "internalType": "address payable",
           "name": "",
           "type": "address"
         }
@@ -404,13 +404,289 @@
     }
   ];
   
-  const contractAddress = "0x9F45Eeb7c50082cb29376D8994f1C46360483E28";
+  const contractAddress = "0x563C1d1743De1ad18Bf839f5c2fd80eb9ff53103";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+
+
+  // funding contract
+  const fundingAbi =[
+  {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_projectDetailsAddress",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address payable",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "contributors",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "fundingGoal",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "goalReached",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "projectOwner",
+      "outputs": [
+        {
+          "internalType": "address payable",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "totalAmountRaised",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "weiAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "weiToEther",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "contribute",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function",
+      "payable": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProjectName",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProjectAmountRaised",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getToRaised",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isGoalReached",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "setCampaignStatus",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function",
+      "payable": true
+    },
+    {
+      "inputs": [],
+      "name": "refund",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ];
+  
+  const fundingAddress = "0x5784C07b461f24a07AC70Bd29204d5C34e1C0734";
+  const fundingInstance = new web3.eth.Contract(fundingAbi, fundingAddress);
 
   async function get_projects() {
       id = 0;
+      // flag for checking if campaign already approved
+      campaignStatus = localStorage.getItem('campaignStatus');
+
       // Fetch card data from the blockchain using web3.js
       web3.eth.getAccounts().then(function(accounts) {
+
+
+        fundingInstance.methods.isGoalReached(id).call().then((result) => {;
+
+          console.log("campaign ", result);
+          isCampaignApproved = result;
+
+        }).catch((error) => {
+        console.error(error);
+        });
         const cardData = contractInstance.methods.getProjectDetails().call({from: accounts[0]}).then((result) => {;
         console.log(result);
 
@@ -505,6 +781,9 @@
               // card.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
 
 
+              // reset flag 
+              localStorage.setItem('campaignStatus', false);
+
               // pass button id or milestones to setmilestones.html
               let button = document.getElementById(i);
               if(button == null)
@@ -577,22 +856,22 @@
                     <div class="short_contact_list">
                         <ul>
                             <li><a href="#"> <i class="fa fa-phone"></i> +91 9922425315</a></li>
-                            <li id="account"><a href="www.email.com" target="_blank"> <i class="fa fa-envelope"></i>ForFunds@gmail.com</a></li>
+                            <li id="account"><a href="www.email.com"> <i class="fa fa-envelope"></i>ForFunds@gmail.com</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-xl-6 col-md-6 col-lg-4">
                     <div class="social_media_links d-none d-lg-block">
-                        <a href="www.facebook.com" target="_blank">
+                        <a href="www.facebook.com">
                             <i class="fa fa-facebook"></i>
                         </a>
-                        <a href="www.pinterest.com" target="_blank">
+                        <a href="www.pinterest.com">
                             <i class="fa fa-pinterest-p"></i>
                         </a>
-                        <a href="www.linkedin.com" target="_blank">
+                        <a href="www.linkedin.com">
                             <i class="fa fa-linkedin"></i>
                         </a>
-                        <a href="www.twitter.com" target="_blank">
+                        <a href="www.twitter.com">
                             <i class="fa fa-twitter"></i>
                         </a>
                     </div>
@@ -614,11 +893,11 @@
                         <div class="main-menu">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a href="index.html" target="_blank">home</a></li>
-                                    <li><a href="CreateProject.html" target="_blank">Create Project</a></li>
+                                    <li><a href="index.html">home</a></li>
+                                    <li><a href="CreateProject.html">Create Project</a></li>
                                     <!-- <li><a href="set milestones.html">Contact</a></li> -->
                                     <!-- Login Button -->
-                                    <li class = "logout"><a href="#" target="_blank">LogOut <i class="ti-angle-down"></i></a>
+                                    <li class = "logout"><a href="#">LogOut <i class="ti-angle-down"></i></a>
                                         <!-- <ul class="submenu">
                                             <li><a href="ProjectLogin.html">Project Owner</a></li>
                                             <li><a href="BackerLogin.html">Backer</a></li>

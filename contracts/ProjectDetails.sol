@@ -42,8 +42,8 @@ contract ProjectDetails {
         projects[_projectId].amountRaised += _amountRaised;
     }
 
-    function getProjectOwner(uint256 _projectId) public view returns (address) {
-        return projectOwners[_projectId];
+    function getProjectOwner(uint256 _projectId) public view returns (address payable) {
+        return payable(projectOwners[_projectId]);
     }
 
     function getCurrentProjectId() public view returns (uint256[] memory) {

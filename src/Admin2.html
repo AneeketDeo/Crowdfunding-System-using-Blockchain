@@ -136,7 +136,7 @@
       "name": "getProjectOwner",
       "outputs": [
         {
-          "internalType": "address",
+          "internalType": "address payable",
           "name": "",
           "type": "address"
         }
@@ -409,7 +409,7 @@
     }
   ];
   
-  const contractAddress = "0x9F45Eeb7c50082cb29376D8994f1C46360483E28";
+  const contractAddress = "0x563C1d1743De1ad18Bf839f5c2fd80eb9ff53103";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
 
@@ -644,6 +644,20 @@
           "type": "uint256"
         }
       ],
+      "name": "setCampaignStatus",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
       "name": "withdraw",
       "outputs": [],
       "stateMutability": "payable",
@@ -659,12 +673,15 @@
     }
   ];
   
-  const fundingAddress = "0x9da2EBCC1A42A7046820623D99C3Be082f9E294e";
+  const fundingAddress = "0x5784C07b461f24a07AC70Bd29204d5C34e1C0734";
   const fundingInstance = new web3.eth.Contract(fundingAbi, fundingAddress);
 
 
   async function get_projects() {
       id = 0;
+
+      // flag for checking if campaign already approved
+      isCampaignApproved = false;
       // Fetch card data from the blockchain using web3.js
       web3.eth.getAccounts().then(function(accounts) {
         const cardData = contractInstance.methods.getAllProjects().call({from: accounts[0]}).then((result) => {;
@@ -724,7 +741,7 @@
                         </div>
 
                         <div class="card-button">
-                          ${result[i].amountToRaise == result[i].amountRaised ? `<button type="button" id="${i+200}" class="btn btn-primary">Approve Campaign</button>` : `${result[i].amountRaised}`}
+                          ${result[i].amountToRaise == result[i].amountRaised && !isCampaignApproved ? `<button type="button" id="${i+200}" class="btn btn-primary">Approve Campaign</button>` : `${result[i].amountRaised}`}
                         </div>
                       </div>
                     </div>
@@ -818,12 +835,52 @@
 
               web3.eth.getAccounts().then(function(accounts) {
               // Do something with the account
-              fundingInstance.methods.withdraw(projectID).send({from: accounts[0]}).then((result) => {
+
+              fundingInstance.methods.getProjectAmountRaised(id).call().then((result) => {;
+
+                console.log("amount raised", result);
+                amountRaised = result;
+
+              }).catch((error) => {
+              console.error(error);
+              });
+
+              fundingInstance.methods.getToRaised(id).call().then((result) => {;
+
+                console.log("amount to raise", result);
+                amountToRaise = result;
+
+                remainingAmount = amountToRaise - amountRaised;
+                console.log("rem = ", remainingAmount);
+
+                // if(amount > remainingAmount){
+                //   amount = remainingAmount.toString();
+                // }
+                if(remainingAmount != 0){
+                  alert("funding goal not reached");
+                  return;
+                }
+                fundingInstance.methods.withdraw(projectID).send({from: accounts[0]}).then((result) => {
                   console.log(result);
 
+                  
                   if(result){
+                    isCampaignApproved = true;
                     // window.location = "Admin2.html";
-                    console.log("transfer succesful");
+                    console.log("transfer succesful", isCampaignApproved);
+                    localStorage.setItem('campaignStatus', true);
+
+                    // if(isCampaignApproved){
+                    //   fundingInstance.methods.setCampaignStatus(id).send({from: accounts[0]}).then((result) => {;
+
+                    //     console.log(result);
+                    //     console.log("campaign status inside id:", id);
+
+                    //   }).catch((error) => {
+                    //   console.error(error);
+                    //   });
+                    // }
+                    
                   }
                   else{
                     console.log("something went wrong");
@@ -833,6 +890,22 @@
               }).catch((error) => {
                   console.error(error);
               });
+
+
+
+              }).catch((error) => {
+              console.error(error);
+              });
+
+              
+              fundingInstance.methods.isGoalReached(id).call().then((result) => {;
+
+                console.log("campaign successful:", result);
+
+              }).catch((error) => {
+              console.error(error);
+              });
+              
 
 
               }).catch(function(error) {
@@ -910,11 +983,11 @@
                         <div class="main-menu">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a href="index.html" target="_blank">home</a></li>
-                                    <!-- <li><a href="milestones.html" target="_blank">About</a></li> -->
+                                    <li><a href="index.html" >home</a></li>
+                                    <!-- <li><a href="milestones.html" >About</a></li> -->
                                     <!-- <li><a href="set milestones.html">Contact</a></li> -->
                                     <!-- Login Button -->
-                                    <li class = "logout"><a href="#" target="_blank">LogOut <i class="ti-angle-down"></i></a>
+                                    <li class = "logout"><a href="#" >LogOut <i class="ti-angle-down"></i></a>
                                         <!-- <ul class="submenu">
                                             <li><a href="ProjectLogin.html">Project Owner</a></li>
                                             <li><a href="BackerLogin.html">Backer</a></li>

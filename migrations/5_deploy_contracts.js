@@ -2,7 +2,7 @@ var backerRewards = artifacts.require("./BackerRewards.sol");
 
 
 module.exports = function(deployer) {
-  deployer.deploy(backerRewards, "0x9F45Eeb7c50082cb29376D8994f1C46360483E28");
+  deployer.deploy(backerRewards, "0x563C1d1743De1ad18Bf839f5c2fd80eb9ff53103");
 
 };
 

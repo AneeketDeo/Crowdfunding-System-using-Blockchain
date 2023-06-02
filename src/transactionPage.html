@@ -83,7 +83,7 @@ const fromAddress = '0xA477931c14B1FDaD19AB69080BA50b5Cd4a6C631';
     if(blockNumber != blockNumbers){
       continue;
     }
-    blockDiv.innerHTML = `<h3>Block Number: ${block.number}</h3>`;
+    blockDiv.innerHTML = `<h3 class="blocknumber">Block Number: ${block.number}</h3>`;
 
     // Sort the filtered transactions by index in ascending order
     filteredTransactions.sort((a, b) => a.transactionIndex - b.transactionIndex);
@@ -94,33 +94,32 @@ const fromAddress = '0xA477931c14B1FDaD19AB69080BA50b5Cd4a6C631';
 
         const txDiv = document.createElement('div');
         txDiv.innerHTML = `
-          <p>Transaction Hash: ${tx.hash}</p>
-          <p>Timestamp: ${txTimestamp}</p>
-          <p>From: Startup1</p>
-          <p>To: ${tx.to}</p>
-          <p>Value: ${web3.utils.fromWei(tx.value, 'ether')} Ether</p>
-          <hr>
+        
 
-          -----------------------------------------------------------------------------------
           <div class="container">
               <div class="row" id="row1" >
-                  <div class="col-12" id="hashvalue" ><h5>Transaction Hash</h5>
-                      <div class="col-5" id="hashvalue2">${tx.hash}</div>
+                  <div class="col-10" id="hashvalue" ><h5>Transaction Hash</h5>
+                      <div class="col-10" id="hashvalue2">${tx.hash}</div>
+                  </div>
+                  <div class="col-2" id="timestamp"><h5>Timestamp</h5>
+                      <div class="col-12" id="timestamp2">${txTimestamp}</div>
                   </div>
               </div>
-              <div class="row">
+              <div class="row" id="row2">
+                  
                   <div class="col-5" id="from"><h5>From Address</h5>
-                      <div class="col-12" id="from2">Second column content</div>
+                      <div class="col-5" id="from2">startup 1</div>
                   </div>
                   <div class="col-5" id="to"><h5>To Address</h5>
-                      <div class="col-12" id="to2">${tx.to}</div>
+                      <div class="col-5" id="to2">${tx.to}</div>
                   </div>
                   <div class="col-2" id="value"><h5>Value</h5>
                       <div class="col-12" id="value2"> ${web3.utils.fromWei(tx.value, 'ether')} Ether</div>
                   </div>
               </div>
+              <div class="button"><button type="button" class="btn btn-outline-danger">Raise Issue</button></div>
           </div>
-          -------------------------------------------------------------------------------------------
+          
         `;
 
         blockDiv.appendChild(txDiv);
@@ -178,7 +177,7 @@ const fromAddress = '0x71FB9a14e35e88eEd482316A9FC0712eFCc20815';
     if(blockNumber != blockNumbers){
       continue;
     }
-    blockDiv.innerHTML = `<h3>Block Number: ${block.number}</h3>`;
+    blockDiv.innerHTML = `<h3 class="blocknumber">Block Number: ${block.number}</h3>`;
 
     // Sort the filtered transactions by index in ascending order
     filteredTransactions.sort((a, b) => a.transactionIndex - b.transactionIndex);
@@ -189,32 +188,32 @@ const fromAddress = '0x71FB9a14e35e88eEd482316A9FC0712eFCc20815';
 
         const txDiv = document.createElement('div');
         txDiv.innerHTML = `
-          <p>Transaction Hash: ${tx.hash}</p>
-          <p>Timestamp: ${txTimestamp}</p>
-          <p>From: Backer1</p>
-          <p>To: ${tx.to}</p>
-          <p>Value: ${web3.utils.fromWei(tx.value, 'ether')} Ether</p>
-          <hr>
-          -------------------------------------------------------------------
-          <div class="container">
+          
+        <div class="container">
               <div class="row" id="row1" >
-                  <div class="col-12" id="hashvalue" ><h5>Transaction Hash</h5>
-                      <div class="col-5" id="hashvalue2">${tx.hash}</div>
+                  <div class="col-10" id="hashvalue" ><h5>Transaction Hash</h5>
+                      <div class="col-10" id="hashvalue2">${tx.hash}</div>
+                  </div>
+                  <div class="col-2" id="timestamp"><h5>Timestamp</h5>
+                      <div class="col-12" id="timestamp2">${txTimestamp}</div>
                   </div>
               </div>
-              <div class="row">
+              <div class="row" id="row2">
+                  
                   <div class="col-5" id="from"><h5>From Address</h5>
-                      <div class="col-12" id="from2">Second column content</div>
+                      <div class="col-5" id="from2">Backer 1</div>
                   </div>
                   <div class="col-5" id="to"><h5>To Address</h5>
-                      <div class="col-12" id="to2">${tx.to}</div>
+                      <div class="col-5" id="to2">${tx.to}</div>
                   </div>
                   <div class="col-2" id="value"><h5>Value</h5>
                       <div class="col-12" id="value2"> ${web3.utils.fromWei(tx.value, 'ether')} Ether</div>
                   </div>
               </div>
+              <div class="button"><button type="button" class="btn btn-outline-danger">Raise Issue</button></div>
           </div>
-          ---------------------------------------------------------------------------
+          
+          
         `;
 
         blockDiv.appendChild(txDiv);
@@ -336,10 +335,10 @@ const fromAddress = '0x71FB9a14e35e88eEd482316A9FC0712eFCc20815';
           </div>
     </div> -->
 
-    <h1>Startup Transactions</h1>
+    <h1 class="startup">Startup Transactions</h1>
     <div id="transactions"></div>
 
-    <h1>Backer Transactions</h1>
+    <h1 class="startup">Backer Transactions</h1>
     <div id="backer-transactions"></div>
 </body>
 </html>

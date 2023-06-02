@@ -282,13 +282,20 @@ contract funding {
         return projectDetails.getProject(_projectId).goalReached;
     }
 
+    function setCampaignStatus(uint256 _projectId) public view{
+        projectDetails.getProject(_projectId).goalReached = true;
+    }
+
     function withdraw(uint256 _projectId) public payable{
         // require(isGoalReached(_projectId), "Funding goal not reached");
         require(msg.sender == admin, "Only admin can withdraw funds");
         // add all the required require conditions
 
-        uint256 etherAmount = getProjectAmountRaised(_projectId);
-        payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount);
+        projectOwner = projectDetails.getProjectOwner(_projectId);
+    
+        projectOwner.transfer(address(this).balance);
+        
+        setCampaignStatus(_projectId);
     }
 
     // function checkGoalReached() public {
